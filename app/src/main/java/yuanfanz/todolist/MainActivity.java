@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,20 +24,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupUI (@NonNull List<Todo> todos) {
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.list_container);
-        linearLayout.removeAllViews();
-        for (Todo todo : todos) {
-            View view = getListItemView(todo);
-            linearLayout.addView(view);
-        }
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        TodoListAdapter adapter = new TodoListAdapter(this, todos);
+        listView.setAdapter(adapter);
     }
 
-    @NonNull
-    private View getListItemView(@NonNull Todo todo) {
-        View view = getLayoutInflater().inflate(R.layout.todo_list_item, null);
-        ((TextView) view.findViewById(R.id.todo_list_item_text)).setText(todo.text);
-        return view;
-    }
+
+//    @NonNull
+//    private View getListItemView(@NonNull Todo todo) {
+//        View view = getLayoutInflater().inflate(R.layout.todo_list_item, null);
+//        ((TextView) view.findViewById(R.id.todo_list_item_text)).setText(todo.text);
+//        return view;
+//    }
 
     @NonNull
     private List<Todo> mockData() {
