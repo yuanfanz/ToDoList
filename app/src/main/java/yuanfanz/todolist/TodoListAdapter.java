@@ -43,10 +43,13 @@ public class TodoListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.todo_list_item, parent);
+        }
+
         Todo todo = data.get(position);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.todo_list_item, null);
-        ((TextView) view.findViewById(R.id.todo_list_item_text)).setText(todo.text);
-        return view;
+        ((TextView) convertView.findViewById(R.id.todo_list_item_text)).setText(todo.text);
+        return convertView;
     }
 }
