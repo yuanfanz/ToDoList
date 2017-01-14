@@ -1,16 +1,46 @@
 package yuanfanz.todolist.models;
 
-/**
- * Created by yuanfanz on 16/12/25.
- */
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Todo {
+import java.util.Date;
 
-    public boolean done;
+public class Todo implements Parcelable {
 
     public String text;
 
-    public Todo(String text) {
+    public Date remindDate;
+
+    public Todo(String text, Date remindDate) {
         this.text = text;
+        this.remindDate = remindDate;
+    }
+
+    protected Todo(Parcel in) {
+        text = in.readString();
+        remindDate = new Date(in.readLong());
+    }
+
+    public static final Creator<Todo> CREATOR = new Creator<Todo>() {
+        @Override
+        public Todo createFromParcel(Parcel in) {
+            return new Todo(in);
+        }
+
+        @Override
+        public Todo[] newArray(int size) {
+            return new Todo[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(text);
+        dest.writeLong(remindDate.getTime());
     }
 }
